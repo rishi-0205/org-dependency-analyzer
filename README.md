@@ -5,7 +5,7 @@
 
 ---
 
-## 🌟 Overview
+## Overview
 
 When key personnel leave an engineering organization, traditional relational HR systems can tell you *who reported to them*, but they cannot easily answer:
 
@@ -17,7 +17,7 @@ These are multi-hop path traversals and pattern-matching questions over a networ
 
 ---
 
-## 🤔 Why a Graph Database?
+## Why a Graph Database?
 
 This application's core questions are all about **the shape of connections**, not the shape of rows:
 
@@ -31,7 +31,7 @@ In short: the questions this tool answers are graph-traversal questions by natur
 
 ---
 
-## 🏗️ Architecture & Tech Stack
+## Architecture & Tech Stack
 
 ```
                               ┌────────────────────────────────────────────────────────┐
@@ -70,7 +70,7 @@ In short: the questions this tool answers are graph-traversal questions by natur
 
 ---
 
-## 📊 Graph Data Model
+## Graph Data Model
 
 ### Diagram
 
@@ -109,7 +109,7 @@ A quick text sketch of the shape, for reference while building the visual diagra
 
 ---
 
-## ⚡ Key Cypher Queries Explained
+## Key Cypher Queries Explained
 
 ### 1. Multi-Hop Blast Radius Query
 Traverses 1 to 3 hops downstream from the person's owned modules, taking `min(length(path))` to calculate shortest hop distance and using null-safe `collect()` to cleanly return `[]` for leaf modules with no downstream dependents:
@@ -196,19 +196,19 @@ ORDER BY case risk_level when 'CRITICAL' then 1 when 'HIGH' then 2 else 3 end, d
 
 ---
 
-## 🗄️ Setting Up CognoDB Cloud
+## Setting Up CognoDB Cloud
 
 1. Go to **[console.cognodb.com/signup](https://console.cognodb.com/signup)** and create a free account — no credit card required.
 2. From the console, create a **free `c0` instance** and select a region. Provisioning takes under a minute. Each workspace gets one free instance.
 3. Once provisioned, copy the connection URI (`bolt+s://<instance-id>.databases.cognodb.cloud`) and the generated password for the `cognodb` user.
-   > ⚠️ The password is shown **exactly once**. Copy or download it immediately.
+   > **Important:** The password is shown **exactly once**. Copy or download it immediately.
 4. Save these values — you'll enter them into `backend/.env` in the setup steps below.
 
 **Free tier limits:** burstable 0.5 vCPU, 256 MB RAM, 1 GB disk, up to 200 connections — comfortably sufficient for this project's seed dataset.
 
 ---
 
-## 🚀 Local Development Setup
+## Local Development Setup
 
 ### 1. Prerequisites
 - Python 3.11+
@@ -268,7 +268,7 @@ Visit **`http://localhost:5173`** in your browser.
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 > _Insert screenshots here once the app is running locally or deployed. Suggested shots:_
 > - Dashboard overview (stat cards + at-risk modules table)
@@ -285,14 +285,14 @@ Visit **`http://localhost:5173`** in your browser.
 
 ---
 
-## 🌐 Live Demo & Screen Recording
+## Live Demo & Screen Recording
 
 - **Hosted demo:** _[insert deployed frontend URL here]_
 - **Screen recording:** _[insert recording link here]_
 
 ---
 
-## 🧪 Verification & Test Results
+## Verification & Test Results
 
 - **Backend Pytest Suite:** `13 passed in 0.87s (100% pass rate)`
 - **Frontend Production Build:** `tsc && vite build` passed with `0 TypeScript errors`
@@ -303,12 +303,12 @@ Visit **`http://localhost:5173`** in your browser.
 
 ---
 
-## 📐 Scope Notes
+## Scope Notes
 
 - **Auth/RBAC** is intentionally out of scope for this assignment — the application is a read-only exploration tool with no write-protection concerns. In a production deployment, this would be added as a `Role` node type gating write operations.
 - **CRUD UI** is intentionally omitted; the seed script serves as the write path, and the app focuses on read-side graph exploration and analysis.
 
 ---
 
-## 📄 License
+## License
 MIT License
