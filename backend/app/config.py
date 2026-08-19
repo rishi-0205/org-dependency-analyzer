@@ -20,13 +20,17 @@ class Settings(BaseSettings):
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://localhost:3000",
+        "https://frontend-gilt-xi-54.vercel.app",
     ]
+    CORS_ORIGIN_REGEX: str = r"https:\/\/.*\.vercel\.app"
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
     def parse_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
         if isinstance(v, str):
-            return [origin.strip() for origin in v.split(",") if origin.strip()]
+            return [origin.strip().rstrip("/") for origin in v.split(",") if origin.strip()]
+        if isinstance(v, list):
+            return [origin.strip().rstrip("/") for origin in v if isinstance(origin, str) and origin.strip()]
         return v
 
     model_config = SettingsConfigDict(
