@@ -1,6 +1,6 @@
 # Org Dependency & Bus-Factor Analyzer
 
-> **Graph-Powered Blast Radius Analysis & Skill-Backfill Intelligence**
+> **Graph-Powered Blast Radius Analysis & Skill-Backfill Intelligence**  
 > Built with CognoDB (openCypher over Bolt Protocol), FastAPI, Python 3.13, React 18, TypeScript, and Tailwind CSS.
 
 ---
@@ -74,7 +74,7 @@ In short: the questions this tool answers are graph-traversal questions by natur
 
 ### Diagram
 
-> _Insert the data model diagram here — e.g. an Excalidraw/draw.io export showing each node label as a box and each relationship as a labeled, directed arrow between boxes, matching the schema below. Save as `docs/data-model-diagram.png` and embed with:_
+> _Insert the data model diagram here — e.g. an Excalidraw/draw.io export showing each node label as a box and each relationship as a labeled, directed arrow between boxes, matching the schema below. Save as `docs/data-model-diagram.png` and embed with:_  
 > `![Data model diagram](docs/data-model-diagram.png)`
 
 A quick text sketch of the shape, for reference while building the visual diagram:
@@ -196,75 +196,143 @@ ORDER BY case risk_level when 'CRITICAL' then 1 when 'HIGH' then 2 else 3 end, d
 
 ---
 
-## Setting Up CognoDB Cloud
+## ⚡ Quick Start (If Already Set Up)
 
-1. Go to **[console.cognodb.com/signup](https://console.cognodb.com/signup)** and create a free account — no credit card required.
-2. From the console, create a **free `c0` instance** and select a region. Provisioning takes under a minute. Each workspace gets one free instance.
-3. Once provisioned, copy the connection URI (`bolt+s://<instance-id>.databases.cognodb.cloud`) and the generated password for the `cognodb` user.
-   > **Important:** The password is shown **exactly once**. Copy or download it immediately.
-4. Save these values — you'll enter them into `backend/.env` in the setup steps below.
+If you have already created your virtual environment, populated your `.env` credentials, and seeded CognoDB, use these two commands to launch the application:
 
-**Free tier limits:** burstable 0.5 vCPU, 256 MB RAM, 1 GB disk, up to 200 connections — comfortably sufficient for this project's seed dataset.
+### Terminal 1: Backend
+```powershell
+cd backend
+.\venv\Scripts\Activate.ps1
+uvicorn app.main:app --reload --port 8000
+```
+
+### Terminal 2: Frontend
+```powershell
+cd frontend
+npm run dev
+```
+
+Open **`http://localhost:5173`** in your browser.
 
 ---
 
-## Local Development Setup
+## 🛠️ First-Time Setup & Local Installation
+
+Follow this complete guide if you are cloning the repository for the first time or setting it up on a new machine.
 
 ### 1. Prerequisites
-- Python 3.11+
-- Node.js 18+ and npm
-- A CognoDB Cloud instance (see above)
+- **Python 3.11+** installed (`python --version`)
+- **Node.js 18+** and **npm** installed (`node -v` and `npm -v`)
+- **Git** installed
+- A **CognoDB Cloud** account (free tier, setup below)
 
-### 2. Backend Setup (Port 8000)
+---
+
+### 2. Setting Up CognoDB Cloud (Database)
+
+1. Go to **[console.cognodb.com/signup](https://console.cognodb.com/signup)** and create a free account (no credit card required).
+2. From the console, create a **free `c0` instance** and select your closest region. Provisioning takes under 60 seconds.
+3. Once provisioned, copy the **Connection URI** and the **Generated Password** for user `cognodb`:
+   - `COGNODB_URI`: `bolt+s://<instance-id>.databases.cognodb.cloud`
+   - `COGNODB_USER`: `cognodb`
+   - `COGNODB_PASSWORD`: `<your-generated-password>`
+   > ⚠️ **Important:** The password is shown **only once**. Save it securely.
+
+---
+
+### 3. Backend Setup (Port 8000)
+
+Open a terminal and navigate to the `backend` folder:
 
 ```powershell
 cd backend
 
-# 1. Create and activate an isolated virtual environment
+# Step 3.1: Create and activate an isolated Python virtual environment
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 
-# 2. Install dependencies
+# Step 3.2: Install backend dependencies
 pip install -r requirements.txt
 
-# 3. Configure credentials
+# Step 3.3: Configure environment secrets
 copy .env.example .env
-# Edit backend/.env and fill in:
-#   COGNODB_URI=bolt+s://<instance-id>.databases.cognodb.cloud
-#   COGNODB_USER=cognodb
-#   COGNODB_PASSWORD=<your generated password>
-
-# 4. Apply schema constraints and indexes (one-time)
-python seed/constraints.py
-
-# 5. Generate the deterministic org dataset with engineered failure scenarios (one-time)
-python seed/seed_data.py
-
-# 6. Run tests
-python -m pytest tests/
-
-# 7. Start the backend development server
-uvicorn app.main:app --reload --port 8000
 ```
 
-### 3. Frontend Setup (Port 5173)
+Open `backend/.env` in your text editor and fill in your CognoDB credentials:
+```env
+COGNODB_URI=bolt+s://<instance-id>.databases.cognodb.cloud
+COGNODB_USER=cognodb
+COGNODB_PASSWORD=<your-generated-password>
+PORT=8000
+ENVIRONMENT=development
+CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000
+```
+
+Now apply constraints, seed data, and run tests:
+
+```powershell
+# Step 3.4: Apply schema constraints & indexes (idempotent, one-time)
+python seed/constraints.py
+
+# Step 3.5: Populate deterministic org dataset with engineered bottleneck scenarios (one-time)
+python seed/seed_data.py
+
+# Step 3.6: Run automated test suite (verifies all 13 API endpoints and queries)
+python -m pytest tests/
+
+# Step 3.7: Start the FastAPI backend server
+uvicorn app.main:app --reload --port 8000
+```
+Backend will be available at **`http://localhost:8000`** (Interactive OpenAPI docs at `http://localhost:8000/docs`).
+
+---
+
+### 4. Frontend Setup (Port 5173)
+
+Open a **second terminal** and navigate to the `frontend` folder:
 
 ```powershell
 cd frontend
 
-# 1. Install dependencies
+# Step 4.1: Install frontend dependencies
 npm install
 
-# 2. Configure the API base URL
+# Step 4.2: Configure environment variables
 copy .env.example .env
-# Edit frontend/.env:
-#   VITE_API_BASE_URL=http://localhost:8000
+# Verify frontend/.env contains:
+# VITE_API_BASE_URL=http://localhost:8000
 
-# 3. Start the Vite development server
+# Step 4.3: Start Vite development server
 npm run dev
 ```
 
-Visit **`http://localhost:5173`** in your browser.
+Open your browser and visit:  
+👉 **`http://localhost:5173`**
+
+---
+
+## 🎯 Exploring Demo Scenarios in the UI
+
+The database seeder engineers deterministic organizational risk scenarios for live exploration:
+
+1. **Simulate a Critical Departure (Elena Rostova - `auth-service`)**:
+   - Use the global search bar in the top navigation or click on the **At-Risk Modules** table row for `auth-service`.
+   - Click **"Simulate Departure / What If They Leave?"**.
+   - **Blast Radius**: Watch the side-by-side tree reveal a cascading 5-service failure across 1-hop and 2-hop dependents.
+   - **Backfill Recommendations**: Observe how candidates are ranked by composite score, exposing an immediate OAuth2/Rust skill gap requiring targeted hiring or cross-training.
+
+2. **Multi-Hop Dependency Cascade (Marcus Vance - `payment-gateway`)**:
+   - Navigate to Marcus Vance's profile (`/people/p-marcus-vance`).
+   - Run departure simulation to observe cascading breakdown of `checkout-service`, `subscription-billing`, and downstream microservices.
+
+3. **Leaf Module Null-Safety (David Kim - `ops-dashboard`)**:
+   - Navigate to David Kim's profile (`/people/p-david-kim`).
+   - Run departure simulation on `ops-dashboard` to verify that leaf modules with 0 downstream consumers return an empty impact list with zero UI glitches.
+
+4. **Interactive Architecture Topology Graph**:
+   - Click **"Explore Dependency Graph"** on the Dashboard or top navbar.
+   - Interact with the 2D force-directed canvas with directional arrows, criticality coloring (Rose for High, Amber for Medium, Emerald for Low), and click any node to jump directly to its dependency breakdown.
 
 ---
 
