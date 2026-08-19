@@ -3,45 +3,101 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #FDF5E7;
+    color: #1C1912;
   }
   code, pre, kbd {
     font-family: 'JetBrains Mono', monospace;
   }
 }
 
-/* Custom modern scrollbar */
+/* Custom warm scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B0F17;
+  background: #FDF5E7;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
+  background: #E5DAC8;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #CFC3B0;
 }
 
-/* Glassmorphism card utilities */
-.glass-panel {
-  background: rgba(21, 29, 44, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Card Surface Tiers & Radius Discipline (Sleek Reduced Curvature) */
+.warm-card {
+  background-color: #FFFFFF;
+  border: 1px solid #EFE5D3;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px -2px rgba(28, 25, 18, 0.04), 0 2px 6px -1px rgba(28, 25, 18, 0.02);
 }
 
-.glass-panel-hover {
+.warm-card-hover {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-panel-hover:hover {
-  background: rgba(26, 36, 56, 0.85);
-  border-color: rgba(99, 102, 241, 0.3);
+.warm-card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 28px -4px rgba(28, 25, 18, 0.08), 0 4px 10px -2px rgba(28, 25, 18, 0.03);
+  border-color: #E2D4BF;
+}
+
+.contrast-card {
+  background-color: #1C1912;
+  color: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px -4px rgba(28, 25, 18, 0.18);
+}
+
+/* Row items: 8px radius */
+.list-row {
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+}
+
+/* Pill buttons */
+.btn-pill-ink {
+  background-color: #1C1912;
+  color: #FFFFFF;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+.btn-pill-ink:hover {
+  background-color: #332E22;
+}
+
+.btn-pill-amber {
+  background-color: #F4A62C;
+  color: #1C1912;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+.btn-pill-amber:hover {
+  background-color: #E2961F;
+}
+
+.btn-pill-white {
+  background-color: #FFFFFF;
+  color: #1C1912;
+  border: 1px solid #EFE5D3;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+.btn-pill-white:hover {
+  background-color: #FDF9F2;
+  border-color: #DFCDB7;
+}
+
+/* Hairline dividers */
+.hairline-warm {
+  border-color: #EFE5D3;
 }

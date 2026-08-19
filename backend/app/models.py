@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 
 
@@ -183,15 +183,54 @@ class SearchResult(BaseModel):
 class GraphNode(BaseModel):
     id: str
     name: str
-    criticality: Optional[str] = "medium"
+    type: str  # "person" | "module" | "skill" | "team" | "project"
+    
+    # Person properties
+    role: Optional[str] = None
+    seniority: Optional[str] = None
+    email: Optional[str] = None
+    team: Optional[str] = None
+    skills: List[Dict[str, Any]] = Field(default_factory=list)
+    owned_modules: List[Dict[str, Any]] = Field(default_factory=list)
+
+    # Module properties
+    criticality: Optional[str] = None
+    description: Optional[str] = None
+    repo_url: Optional[str] = None
+    project: Optional[str] = None
     owner: Optional[str] = None
+    owner_id: Optional[str] = None
+    downstream_count: Optional[int] = 0
+    contributor_count: Optional[int] = 0
+    contributors: List[Dict[str, Any]] = Field(default_factory=list)
+    depends_on: List[Dict[str, Any]] = Field(default_factory=list)
+    depended_on_by: List[Dict[str, Any]] = Field(default_factory=list)
+
+    # Skill properties
+    category: Optional[str] = None
+    people_with_skill: List[Dict[str, Any]] = Field(default_factory=list)
+
+    # Team properties
+    member_count: Optional[int] = 0
+    members: List[Dict[str, Any]] = Field(default_factory=list)
+    team_owned_modules: List[Dict[str, Any]] = Field(default_factory=list)
+    spof_count: Optional[int] = 0
+
+    # Project properties
+    status: Optional[str] = None
+    project_modules: List[Dict[str, Any]] = Field(default_factory=list)
 
 
 class GraphLink(BaseModel):
     source: str
     target: str
+    relationship: str  # "owns" | "contributes_to" | "has_skill" | "member_of" | "depends_on" | "part_of"
+    commits: Optional[int] = None
+    last_active: Optional[str] = None
+    level: Optional[str] = None
 
 
 class GraphData(BaseModel):
     nodes: List[GraphNode] = Field(default_factory=list)
     links: List[GraphLink] = Field(default_factory=list)
+

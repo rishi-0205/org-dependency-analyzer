@@ -230,15 +230,31 @@ def test_search_endpoint():
 def test_graph_endpoint():
     """Verify /api/graph endpoint for force-directed visualization."""
     mock_graph = {
-        "nodes": [{"id": "mod-auth-service", "name": "auth-service", "criticality": "high", "owner": "Elena Rostova"}],
-        "links": [{"source": "mod-checkout-api", "target": "mod-auth-service"}],
+        "nodes": [
+            {
+                "id": "mod-auth-service",
+                "name": "auth-service",
+                "type": "module",
+                "criticality": "high",
+                "owner": "Elena Rostova",
+            }
+        ],
+        "links": [
+            {
+                "source": "mod-checkout-api",
+                "target": "mod-auth-service",
+                "relationship": "depends_on",
+            }
+        ],
     }
     with patch("app.routers.graph.get_graph_data", return_value=mock_graph):
         response = client.get("/api/graph")
         assert response.status_code == 200
         data = response.json()
         assert len(data["nodes"]) == 1
+        assert data["nodes"][0]["type"] == "module"
         assert len(data["links"]) == 1
+        assert data["links"][0]["relationship"] == "depends_on"
 
 
 def test_resource_not_found_exception():

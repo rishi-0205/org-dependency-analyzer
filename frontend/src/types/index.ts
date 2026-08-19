@@ -179,19 +179,74 @@ export interface SearchResult {
   modules: SearchItem[];
 }
 
+export type GraphNodeType = 'person' | 'module' | 'skill' | 'team' | 'project';
+export type GraphRelationshipType =
+  | 'owns'
+  | 'contributes_to'
+  | 'has_skill'
+  | 'member_of'
+  | 'depends_on'
+  | 'part_of';
+
 export interface GraphNode {
   id: string;
   name: string;
+  type: GraphNodeType;
+
+  // Person properties
+  role?: string;
+  seniority?: string;
+  email?: string;
+  team?: string;
+  skills?: { name: string; level?: string; category?: string }[];
+  owned_modules?: { id: string; name: string; criticality?: Criticality }[];
+
+  // Module properties
   criticality?: Criticality;
+  description?: string;
+  repo_url?: string;
+  project?: string;
   owner?: string;
+  owner_id?: string;
+  downstream_count?: number;
+  contributor_count?: number;
+  contributors?: { id: string; name: string; commits: number; last_active?: string }[];
+  depends_on?: { id: string; name: string; criticality?: Criticality }[];
+  depended_on_by?: { id: string; name: string; criticality?: Criticality }[];
+
+  // Skill properties
+  category?: string;
+  people_with_skill?: { id: string; name: string; role?: string; level?: string }[];
+
+  // Team properties
+  member_count?: number;
+  members?: { id: string; name: string; role?: string }[];
+  team_owned_modules?: { id: string; name: string; criticality?: Criticality; is_spof?: boolean }[];
+  spof_count?: number;
+
+  // Project properties
+  status?: string;
+  project_modules?: { id: string; name: string; criticality?: Criticality }[];
+
+  // Force graph coordinates populated by simulation
+  x?: number;
+  y?: number;
+  vx?: number;
+  vy?: number;
+  index?: number;
 }
 
 export interface GraphLink {
-  source: string;
-  target: string;
+  source: string | any;
+  target: string | any;
+  relationship: GraphRelationshipType;
+  commits?: number;
+  last_active?: string;
+  level?: string;
 }
 
 export interface GraphData {
   nodes: GraphNode[];
   links: GraphLink[];
 }
+

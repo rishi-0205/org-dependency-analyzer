@@ -7,7 +7,7 @@ interface PageContainerProps {
 
 export default function PageContainer({ children, className = '' }: PageContainerProps) {
   return (
-    <main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ${className}`}>
+    <main className={`max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 pt-20 pb-12 min-h-screen ${className}`}>
       {children}
     </main>
   );

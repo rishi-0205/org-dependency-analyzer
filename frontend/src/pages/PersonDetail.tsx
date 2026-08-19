@@ -84,7 +84,7 @@ export default function PersonDetail() {
       <PageContainer className="space-y-6">
         <Link
           to="/"
-          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-indigo-300 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-[#A39A8B] hover:text-[#1C1912] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Overview</span>
@@ -99,42 +99,42 @@ export default function PersonDetail() {
   }
 
   return (
-    <PageContainer className="space-y-8 animate-in fade-in duration-200">
-      {/* Back Link */}
+    <PageContainer className="space-y-8 animate-in fade-in duration-150">
+      {/* Back Navigation */}
       <Link
-        to="/"
-        className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-indigo-300 transition-colors"
+        to="/nodes/employees"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#A39A8B] hover:text-[#1C1912] transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
-        <span>Back to Overview</span>
+        <span>Back to Staff Directory</span>
       </Link>
 
-      {/* Main Profile Header Card */}
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+      {/* Main Profile Header */}
+      <div className="warm-card p-6 sm:p-8 space-y-6">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           {/* Avatar & Identifiers */}
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-900 text-white flex items-center justify-center font-bold text-2xl sm:text-3xl shadow-xl shadow-indigo-950/50 ring-2 ring-indigo-500/30 flex-shrink-0">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#1C1912] text-white flex items-center justify-center font-bold text-2xl sm:text-3xl flex-shrink-0">
               {person.name.charAt(0)}
             </div>
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2.5">
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1C1912] tracking-tight">
                   {person.name}
                 </h1>
-                <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-[#EFE5D3] text-[#1C1912]">
                   {person.seniority}
                 </span>
                 {person.team && (
-                  <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                    {person.team}
+                  <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-[#FDF5E7] text-[#1C1912] border border-[#EFE5D3]">
+                    Team: {person.team}
                   </span>
                 )}
               </div>
-              <div className="text-sm font-medium text-slate-300">{person.role}</div>
+              <div className="text-sm font-medium text-[#1C1912]/80">{person.role}</div>
               <a
                 href={`mailto:${person.email}`}
-                className="text-xs text-slate-400 hover:text-indigo-300 flex items-center gap-1.5 transition-colors"
+                className="text-xs text-[#A39A8B] hover:text-[#1C1912] flex items-center gap-1.5 transition-colors"
               >
                 <Mail className="w-3.5 h-3.5" />
                 <span>{person.email}</span>
@@ -142,14 +142,14 @@ export default function PersonDetail() {
             </div>
           </div>
 
-          {/* Simulate Departure Action Trigger */}
+          {/* Signature Action: Simulate Departure */}
           <div className="w-full lg:w-auto">
             <button
               onClick={handleSimulateDeparture}
-              className="w-full lg:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-bold text-sm tracking-wide shadow-xl shadow-rose-950/60 flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full lg:w-auto px-6 py-3 rounded-lg bg-[#E15B43] hover:bg-[#C94A34] text-white font-bold text-sm tracking-wide shadow-sm flex items-center justify-center gap-2.5 transition-all"
             >
-              <Flame className="w-5 h-5 text-amber-200" />
-              <span>Simulate Departure / What If They Leave?</span>
+              <Flame className="w-4 h-4 text-white" />
+              <span>Simulate Departure Impact</span>
             </button>
           </div>
         </div>
@@ -160,9 +160,7 @@ export default function PersonDetail() {
         <div id="simulation-panel">
           {simulationError && (
             <ErrorBanner
-              title="Simulation Calculation Error"
               message={simulationError.message}
-              hint={simulationError.data?.hint}
               onRetry={handleSimulateDeparture}
             />
           )}
@@ -176,14 +174,14 @@ export default function PersonDetail() {
       )}
 
       {/* Grid: Technical Skills Matrix & Module Ownership */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Skills Column (1 col) */}
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
+        <div className="warm-card p-6 space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#EFE5D3]">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-indigo-400" />
-              <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">
-                Technical Skill Profile ({person.skills.length})
+              <Sparkles className="w-4 h-4 text-[#F4A62C]" />
+              <h3 className="text-sm font-bold text-[#1C1912] uppercase tracking-wider">
+                Technical Skills ({person.skills.length})
               </h3>
             </div>
           </div>
@@ -192,17 +190,15 @@ export default function PersonDetail() {
             {person.skills.map((skill) => (
               <div
                 key={skill.name}
-                className="px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2 text-xs"
+                className="px-3 py-1.5 rounded-lg bg-[#FDF5E7] border border-[#EFE5D3] flex items-center gap-2 text-xs"
               >
-                <span className="font-semibold text-slate-200">{skill.name}</span>
+                <span className="font-semibold text-[#1C1912]">{skill.name}</span>
                 {skill.level && (
                   <span
-                    className={`text-[10px] font-mono font-medium px-1.5 py-0.5 rounded ${
+                    className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
                       skill.level === 'expert'
-                        ? 'bg-purple-500/20 text-purple-300'
-                        : skill.level === 'intermediate'
-                        ? 'bg-indigo-500/20 text-indigo-300'
-                        : 'bg-slate-800 text-slate-400'
+                        ? 'bg-[#F4A62C]/20 text-[#995900]'
+                        : 'bg-white text-[#A39A8B]'
                     }`}
                   >
                     {skill.level}
@@ -213,7 +209,7 @@ export default function PersonDetail() {
           </div>
 
           {person.skills.length === 0 && (
-            <div className="text-xs text-slate-500 py-4 text-center">
+            <div className="text-xs text-[#A39A8B] py-4 text-center">
               No technical skills currently cataloged.
             </div>
           )}
@@ -222,11 +218,11 @@ export default function PersonDetail() {
         {/* Owned Modules & Contributions (2 cols) */}
         <div className="lg:col-span-2 space-y-6">
           {/* Owned Modules */}
-          <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
+          <div className="warm-card p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EFE5D3]">
               <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-amber-400" />
-                <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">
+                <Shield className="w-4 h-4 text-[#E15B43]" />
+                <h3 className="text-sm font-bold text-[#1C1912] uppercase tracking-wider">
                   Primary Owned Modules ({person.owned_modules.length})
                 </h3>
               </div>
@@ -237,13 +233,13 @@ export default function PersonDetail() {
                 <Link
                   key={mod.id}
                   to={`/modules/${mod.id}`}
-                  className="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-indigo-500/40 hover:bg-slate-800/40 transition-all group flex items-center justify-between"
+                  className="p-4 rounded-lg bg-[#FDF5E7] border border-[#EFE5D3] hover:border-[#1C1912] transition-all group flex items-center justify-between"
                 >
                   <div className="space-y-1">
-                    <div className="font-mono text-sm font-bold text-slate-200 group-hover:text-indigo-300 transition-colors">
+                    <div className="font-mono text-sm font-bold text-[#1C1912] group-hover:text-[#F4A62C] transition-colors">
                       {mod.name}
                     </div>
-                    <div className="text-[11px] text-slate-400">Primary Architect</div>
+                    <div className="text-[11px] text-[#A39A8B]">Primary Architect</div>
                   </div>
                   <CriticalityBadge level={mod.criticality} size="sm" />
                 </Link>
@@ -251,7 +247,7 @@ export default function PersonDetail() {
             </div>
 
             {person.owned_modules.length === 0 && (
-              <div className="text-xs text-slate-500 py-4 text-center">
+              <div className="text-xs text-[#A39A8B] py-4 text-center">
                 This individual does not own any primary modules.
               </div>
             )}
@@ -259,11 +255,11 @@ export default function PersonDetail() {
 
           {/* Contributed Modules */}
           {person.contributed_modules.length > 0 && (
-            <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
+            <div className="warm-card p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#EFE5D3]">
                 <div className="flex items-center gap-2">
-                  <GitCommit className="w-4 h-4 text-purple-400" />
-                  <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">
+                  <GitCommit className="w-4 h-4 text-[#7FA65A]" />
+                  <h3 className="text-sm font-bold text-[#1C1912] uppercase tracking-wider">
                     Secondary Contributed Modules ({person.contributed_modules.length})
                   </h3>
                 </div>
@@ -274,13 +270,13 @@ export default function PersonDetail() {
                   <Link
                     key={mod.id}
                     to={`/modules/${mod.id}`}
-                    className="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 hover:bg-slate-800/40 transition-all group flex items-center justify-between"
+                    className="p-4 rounded-lg bg-[#FDF5E7] border border-[#EFE5D3] hover:border-[#7FA65A] transition-all group flex items-center justify-between"
                   >
                     <div className="space-y-1">
-                      <div className="font-mono text-sm font-bold text-slate-200 group-hover:text-purple-300 transition-colors">
+                      <div className="font-mono text-sm font-bold text-[#1C1912] group-hover:text-[#416124] transition-colors">
                         {mod.name}
                       </div>
-                      <div className="text-[11px] text-purple-300">
+                      <div className="text-[11px] text-[#416124] font-semibold">
                         {mod.commits} commits {mod.last_active && `· Active ${mod.last_active}`}
                       </div>
                     </div>

@@ -158,7 +158,7 @@ def get_backup_candidates(person_id: str) -> Dict[str, Any]:
            shared_skills,
            skill_overlap_count,
            total_relevant_commits,
-           round(composite_score, 1) AS match_score
+           round(composite_score * 10.0) / 10.0 AS match_score
     ORDER BY match_score DESC, skill_overlap_count DESC
     LIMIT 6
     """

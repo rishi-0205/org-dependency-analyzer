@@ -22,7 +22,6 @@ export default function AtRiskTable({ modules }: AtRiskTableProps) {
     if (sortBy === 'downstream') {
       return b.downstream_count - a.downstream_count;
     }
-    // Sort by risk priority
     const priority: Record<string, number> = { CRITICAL: 1, HIGH: 2, MEDIUM: 3 };
     const pA = priority[a.risk_level] || 4;
     const pB = priority[b.risk_level] || 4;
@@ -31,56 +30,56 @@ export default function AtRiskTable({ modules }: AtRiskTableProps) {
   });
 
   return (
-    <div className="glass-panel rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+    <div className="warm-card overflow-hidden">
       {/* Header with Title & Filter Controls */}
-      <div className="p-5 border-b border-slate-800/80 bg-slate-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="p-6 border-b border-[#EFE5D3] bg-[#FDF9F2] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center ring-1 ring-rose-500/20">
-            <ShieldAlert className="w-4 h-4" />
+          <div className="w-10 h-10 rounded-lg bg-[#E15B43]/15 text-[#E15B43] flex items-center justify-center flex-shrink-0">
+            <ShieldAlert className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-100 flex items-center gap-2">
+            <h2 className="text-base font-bold text-[#1C1912] flex items-center gap-2">
               Single-Point-of-Failure Modules
-              <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
+              <span className="px-2 py-0.5 text-[10px] font-bold uppercase rounded-md bg-[#E15B43]/15 text-[#E15B43]">
                 Bus Factor = 1
               </span>
             </h2>
-            <p className="text-xs text-slate-400">
-              Critical services owned by 1 person with 0 secondary contributors
+            <p className="text-xs text-[#A39A8B]">
+              Critical services owned by 1 person with 0 secondary contributors.
             </p>
           </div>
         </div>
 
         {/* Filter / Sort Controls */}
         <div className="flex items-center gap-2 self-end sm:self-auto">
-          <div className="flex items-center gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-800 text-xs text-slate-300">
-            <Filter className="w-3.5 h-3.5 text-slate-500 ml-1.5" />
+          <div className="flex items-center gap-1 bg-white p-1 rounded-lg border border-[#EFE5D3] text-xs">
+            <Filter className="w-3.5 h-3.5 text-[#A39A8B] ml-2" />
             <button
               onClick={() => setFilterCrit('all')}
-              className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-1 rounded-md font-semibold transition-all ${
                 filterCrit === 'all'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'hover:text-slate-100'
+                  ? 'bg-[#1C1912] text-white shadow-sm'
+                  : 'text-[#A39A8B] hover:text-[#1C1912]'
               }`}
             >
               All ({modules.length})
             </button>
             <button
               onClick={() => setFilterCrit('high')}
-              className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-1 rounded-md font-semibold transition-all ${
                 filterCrit === 'high'
-                  ? 'bg-rose-600 text-white shadow-sm'
-                  : 'hover:text-slate-100'
+                  ? 'bg-[#E15B43] text-white shadow-sm'
+                  : 'text-[#A39A8B] hover:text-[#1C1912]'
               }`}
             >
               High
             </button>
             <button
               onClick={() => setFilterCrit('medium')}
-              className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
+              className={`px-3 py-1 rounded-md font-semibold transition-all ${
                 filterCrit === 'medium'
-                  ? 'bg-amber-600 text-white shadow-sm'
-                  : 'hover:text-slate-100'
+                  ? 'bg-[#F4A62C] text-[#1C1912] shadow-sm font-bold'
+                  : 'text-[#A39A8B] hover:text-[#1C1912]'
               }`}
             >
               Medium
@@ -89,44 +88,43 @@ export default function AtRiskTable({ modules }: AtRiskTableProps) {
 
           <button
             onClick={() => setSortBy(sortBy === 'risk' ? 'downstream' : 'risk')}
-            className="px-3 py-1.5 bg-slate-900 text-xs font-medium text-slate-300 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors"
-            title="Toggle sort by risk tier or downstream blast count"
+            className="px-3.5 py-1.5 bg-white text-xs font-semibold text-[#1C1912] rounded-lg border border-[#EFE5D3] hover:border-[#DFCDB7] transition-colors shadow-sm"
           >
             Sort: {sortBy === 'risk' ? 'Risk Tier' : 'Blast Radius'}
           </button>
         </div>
       </div>
 
-      {/* Table Content */}
+      {/* Table / List Rows Content */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm text-slate-300">
-          <thead className="bg-slate-900/60 text-[11px] uppercase tracking-wider text-slate-400 border-b border-slate-800/80">
+        <table className="w-full text-left text-sm text-[#1C1912]">
+          <thead className="bg-[#FDF9F2] text-[11px] uppercase tracking-wider text-[#A39A8B] border-b border-[#EFE5D3]">
             <tr>
-              <th className="py-3.5 px-5 font-semibold">Module / Service</th>
-              <th className="py-3.5 px-4 font-semibold">Criticality</th>
-              <th className="py-3.5 px-5 font-semibold">Sole Owner (SPoF)</th>
-              <th className="py-3.5 px-4 font-semibold text-center">Downstream Dependents</th>
-              <th className="py-3.5 px-4 font-semibold">Risk Level</th>
-              <th className="py-3.5 px-5 font-semibold text-right">Actions</th>
+              <th className="py-3.5 px-6 font-bold">Module / Service</th>
+              <th className="py-3.5 px-4 font-bold">Criticality</th>
+              <th className="py-3.5 px-6 font-bold">Sole Owner (SPoF)</th>
+              <th className="py-3.5 px-4 font-bold text-center">Downstream Dependents</th>
+              <th className="py-3.5 px-4 font-bold">Risk Level</th>
+              <th className="py-3.5 px-6 font-bold text-right">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/50">
+          <tbody className="divide-y divide-[#EFE5D3]">
             {sortedModules.map((item) => (
               <tr
                 key={item.module_id}
-                className="hover:bg-slate-800/30 transition-colors group"
+                className="hover:bg-[#FDF9F2] transition-colors group"
               >
                 {/* Module Column */}
-                <td className="py-4 px-5">
+                <td className="py-4 px-6">
                   <Link
                     to={`/modules/${item.module_id}`}
-                    className="font-mono text-sm font-semibold text-indigo-300 hover:text-indigo-200 flex items-center gap-1.5 transition-colors"
+                    className="font-mono text-sm font-bold text-[#1C1912] hover:text-[#F4A62C] flex items-center gap-1.5 transition-colors"
                   >
                     <span>{item.module_name}</span>
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
-                  <div className="text-[11px] text-slate-400 mt-0.5">
-                    Contributors: <span className="text-rose-400 font-semibold">0</span> (No redundancy)
+                  <div className="text-[11px] text-[#A39A8B] mt-0.5">
+                    Contributors: <strong className="text-[#E15B43]">0</strong> (Zero redundancy)
                   </div>
                 </td>
 
@@ -136,27 +134,27 @@ export default function AtRiskTable({ modules }: AtRiskTableProps) {
                 </td>
 
                 {/* Owner Column */}
-                <td className="py-4 px-5">
+                <td className="py-4 px-6">
                   <Link
                     to={`/people/${item.owner_id}`}
-                    className="font-medium text-slate-200 hover:text-indigo-300 transition-colors block"
+                    className="font-semibold text-[#1C1912] hover:text-[#F4A62C] transition-colors block"
                   >
                     {item.owner_name}
                   </Link>
                   {item.owner_role && (
-                    <div className="text-xs text-slate-400">{item.owner_role}</div>
+                    <div className="text-xs text-[#A39A8B]">{item.owner_role}</div>
                   )}
                 </td>
 
                 {/* Downstream Count Column */}
                 <td className="py-4 px-4 text-center">
                   <span
-                    className={`inline-flex items-center justify-center font-mono font-bold text-xs px-2.5 py-1 rounded-lg ${
+                    className={`inline-flex items-center justify-center font-mono font-bold text-xs px-2.5 py-1 rounded-md ${
                       item.downstream_count > 2
-                        ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                        ? 'bg-[#E15B43]/15 text-[#E15B43]'
                         : item.downstream_count > 0
-                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                        : 'bg-slate-800 text-slate-400'
+                        ? 'bg-[#F4A62C]/18 text-[#995900]'
+                        : 'bg-[#EFE5D3] text-[#1C1912]'
                     }`}
                   >
                     {item.downstream_count} {item.downstream_count === 1 ? 'service' : 'services'}
@@ -169,10 +167,10 @@ export default function AtRiskTable({ modules }: AtRiskTableProps) {
                 </td>
 
                 {/* Actions Column */}
-                <td className="py-4 px-5 text-right">
+                <td className="py-4 px-6 text-right">
                   <button
                     onClick={() => navigate(`/people/${item.owner_id}`)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-200 border border-slate-700 transition-all shadow-sm"
+                    className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg bg-[#1C1912] hover:bg-[#332E22] text-white transition-all shadow-sm"
                   >
                     <span>Simulate Impact</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -185,7 +183,7 @@ export default function AtRiskTable({ modules }: AtRiskTableProps) {
       </div>
 
       {sortedModules.length === 0 && (
-        <div className="p-8 text-center text-slate-400 text-sm">
+        <div className="p-8 text-center text-[#A39A8B] text-sm">
           No at-risk single-owner modules found matching the selected filter.
         </div>
       )}

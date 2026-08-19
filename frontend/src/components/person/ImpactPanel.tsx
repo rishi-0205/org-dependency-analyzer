@@ -20,16 +20,15 @@ export default function ImpactPanel({
 }: ImpactPanelProps) {
   if (isLoading) {
     return (
-      <div className="glass-panel p-6 rounded-3xl border border-indigo-500/30 shadow-2xl space-y-6">
+      <div className="warm-card p-6 space-y-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-500/20 animate-pulse" />
+          <div className="w-10 h-10 rounded-2xl bg-[#EFE5D3] animate-pulse" />
           <div className="space-y-2">
-            <div className="w-48 h-5 bg-slate-800 rounded animate-pulse" />
-            <div className="w-72 h-4 bg-slate-800/60 rounded animate-pulse" />
+            <div className="w-48 h-5 bg-[#EFE5D3] rounded animate-pulse" />
+            <div className="w-72 h-4 bg-[#EFE5D3]/60 rounded animate-pulse" />
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <LoadingSkeleton type="panel" count={2} />
           <LoadingSkeleton type="panel" count={2} />
         </div>
       </div>
@@ -44,33 +43,33 @@ export default function ImpactPanel({
   const candidates = candidatesData.candidates || [];
 
   return (
-    <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-rose-500/30 bg-gradient-to-b from-rose-950/20 via-[#0E1524] to-[#0B0F17] shadow-2xl space-y-8 animate-in fade-in slide-in-from-bottom-3 duration-200">
+    <div className="warm-card p-6 sm:p-8 space-y-8 animate-in fade-in duration-200">
       {/* Simulation Summary Banner */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 rounded-2xl bg-rose-950/30 border border-rose-500/30">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 rounded-xl bg-[#E15B43]/10 border border-[#E15B43]/30">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center ring-1 ring-rose-500/40 flex-shrink-0 animate-pulse">
+          <div className="w-12 h-12 rounded-lg bg-[#E15B43]/20 text-[#E15B43] flex items-center justify-center flex-shrink-0">
             <ShieldAlert className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+            <h2 className="text-lg font-bold text-[#E15B43] flex items-center gap-2">
               Departure Simulation: {personName}
             </h2>
-            <p className="text-xs text-rose-200/80 mt-0.5">
+            <p className="text-xs text-[#1C1912]/80 mt-0.5">
               Organizational blast radius calculated across multi-hop dependency paths and skill redundancy graphs.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="px-3.5 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 text-center">
-            <div className="text-xs text-slate-400 uppercase font-semibold">Blast Radius</div>
-            <div className="text-lg font-black text-rose-400 font-mono">
+          <div className="px-4 py-2 rounded-lg bg-white border border-[#EFE5D3] text-center shadow-sm">
+            <div className="text-[10px] text-[#A39A8B] uppercase font-bold">Blast Radius</div>
+            <div className="text-lg font-extrabold text-[#E15B43] font-mono">
               {totalImpactCount} {totalImpactCount === 1 ? 'Service' : 'Services'}
             </div>
           </div>
-          <div className="px-3.5 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 text-center">
-            <div className="text-xs text-slate-400 uppercase font-semibold">Backfills</div>
-            <div className="text-lg font-black text-emerald-400 font-mono">
+          <div className="px-4 py-2 rounded-lg bg-white border border-[#EFE5D3] text-center shadow-sm">
+            <div className="text-[10px] text-[#A39A8B] uppercase font-bold">Backfills</div>
+            <div className="text-lg font-extrabold text-[#416124] font-mono">
               {candidates.length} {candidates.length === 1 ? 'Match' : 'Matches'}
             </div>
           </div>
@@ -81,14 +80,14 @@ export default function ImpactPanel({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         {/* Left Column: Cascading Blast Radius */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+          <div className="flex items-center justify-between pb-2 border-b border-[#EFE5D3]">
             <div className="flex items-center gap-2">
-              <ShieldAlert className="w-5 h-5 text-rose-400" />
-              <h3 className="text-base font-bold text-slate-100">
+              <ShieldAlert className="w-5 h-5 text-[#E15B43]" />
+              <h3 className="text-base font-bold text-[#1C1912]">
                 Cascading Impacted Services
               </h3>
             </div>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-[#A39A8B]">
               {impactData.owned_modules.length} Owned Root {impactData.owned_modules.length === 1 ? 'Module' : 'Modules'}
             </span>
           </div>
@@ -98,14 +97,14 @@ export default function ImpactPanel({
 
         {/* Right Column: Ranked Replacement Candidates */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+          <div className="flex items-center justify-between pb-2 border-b border-[#EFE5D3]">
             <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-indigo-400" />
-              <h3 className="text-base font-bold text-slate-100">
+              <Users className="w-5 h-5 text-[#F4A62C]" />
+              <h3 className="text-base font-bold text-[#1C1912]">
                 Recommended Backfill Candidates
               </h3>
             </div>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-[#A39A8B]">
               Ranked by Skill & Commit Overlap
             </span>
           </div>

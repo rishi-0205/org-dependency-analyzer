@@ -1,11 +1,11 @@
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon, ArrowUpRight } from 'lucide-react';
 
 interface StatCardProps {
   title: string;
   value: number | string;
   subtitle?: string;
   icon: LucideIcon;
-  color?: 'indigo' | 'purple' | 'amber' | 'emerald' | 'rose';
+  color?: 'amber' | 'ink' | 'rose' | 'green' | 'taupe' | 'terracotta';
   onClick?: () => void;
 }
 
@@ -14,60 +14,46 @@ export default function StatCard({
   value,
   subtitle,
   icon: Icon,
-  color = 'indigo',
+  color = 'ink',
   onClick,
 }: StatCardProps) {
   const colorMap = {
-    indigo: {
-      bg: 'bg-indigo-500/10 text-indigo-400 ring-indigo-500/20',
-      border: 'hover:border-indigo-500/30',
-      accent: 'text-indigo-300',
-    },
-    purple: {
-      bg: 'bg-purple-500/10 text-purple-400 ring-purple-500/20',
-      border: 'hover:border-purple-500/30',
-      accent: 'text-purple-300',
-    },
-    amber: {
-      bg: 'bg-amber-500/10 text-amber-400 ring-amber-500/20',
-      border: 'hover:border-amber-500/30',
-      accent: 'text-amber-300',
-    },
-    emerald: {
-      bg: 'bg-emerald-500/10 text-emerald-400 ring-emerald-500/20',
-      border: 'hover:border-emerald-500/30',
-      accent: 'text-emerald-300',
-    },
-    rose: {
-      bg: 'bg-rose-500/10 text-rose-400 ring-rose-500/20',
-      border: 'hover:border-rose-500/30',
-      accent: 'text-rose-300',
-    },
+    ink: 'bg-[#1C1912] text-white',
+    amber: 'bg-[#F4A62C] text-[#1C1912]',
+    rose: 'bg-[#E15B43] text-white',
+    green: 'bg-[#7FA65A] text-white',
+    taupe: 'bg-[#B8A78D] text-white',
+    terracotta: 'bg-[#D9724A] text-white',
   }[color];
 
   return (
     <div
       onClick={onClick}
-      className={`glass-panel p-5 rounded-2xl glass-panel-hover flex flex-col justify-between ${
-        onClick ? 'cursor-pointer' : ''
-      } ${colorMap.border}`}
+      className="warm-card p-5 warm-card-hover flex flex-col justify-between group cursor-pointer"
+      title="Click to view full directory & explore in graph"
     >
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+        <span className="text-[11px] font-bold text-[#A39A8B] uppercase tracking-wider">
           {title}
         </span>
-        <div className={`w-9 h-9 rounded-xl flex items-center justify-center ring-1 ${colorMap.bg}`}>
-          <Icon className="w-5 h-5" />
+        <div className="flex items-center gap-1.5">
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${colorMap}`}>
+            <Icon className="w-4 h-4" />
+          </div>
+          <ArrowUpRight className="w-3.5 h-3.5 text-[#A39A8B] opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
       </div>
 
       <div className="mt-4 space-y-1">
-        <div className="text-3xl font-extrabold text-slate-100 tracking-tight">
+        <div className="text-3xl font-extrabold text-[#1C1912] tracking-tight">
           {value}
         </div>
         {subtitle && (
-          <div className="text-xs text-slate-400">
-            {subtitle}
+          <div className="text-xs text-[#A39A8B] flex items-center justify-between">
+            <span>{subtitle}</span>
+            <span className="text-[10px] text-[#1C1912] group-hover:text-[#F4A62C] font-semibold transition-colors">
+              Browse →
+            </span>
           </div>
         )}
       </div>
