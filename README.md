@@ -74,11 +74,6 @@ In short: the questions this tool answers are graph-traversal questions by natur
 
 ### Diagram
 
-> _Insert the data model diagram here — e.g. an Excalidraw/draw.io export showing each node label as a box and each relationship as a labeled, directed arrow between boxes, matching the schema below. Save as `docs/data-model-diagram.png` and embed with:_  
-> `![Data model diagram](docs/data-model-diagram.png)`
-
-A quick text sketch of the shape, for reference while building the visual diagram:
-
 ```
 (Person)-[:OWNS]->(Module)
 (Person)-[:CONTRIBUTES_TO {commits, last_active}]->(Module)
@@ -336,27 +331,10 @@ The database seeder engineers deterministic organizational risk scenarios for li
 
 ---
 
-## Screenshots
+## 🌐 Live Demo
 
-> _Insert screenshots here once the app is running locally or deployed. Suggested shots:_
-> - Dashboard overview (stat cards + at-risk modules table)
-> - Person detail page with "What if they leave?" panel expanded (blast radius + backup candidates side by side)
-> - Module detail page (owner, contributors, upstream/downstream dependencies)
-> - Interactive dependency graph visualization
->
-> ```markdown
-> ![Dashboard](docs/screenshots/dashboard.png)
-> ![Person Detail — Impact Simulation](docs/screenshots/person-detail.png)
-> ![Module Detail](docs/screenshots/module-detail.png)
-> ![Dependency Graph](docs/screenshots/dependency-graph.png)
-> ```
-
----
-
-## Live Demo & Screen Recording
-
-- **Hosted demo:** _[insert deployed frontend URL here]_
-- **Screen recording:** _[insert recording link here]_
+- **Hosted Application (Vercel):** [https://frontend-gilt-xi-54.vercel.app](https://frontend-gilt-xi-54.vercel.app)
+- **API Documentation (Render):** [https://org-dependency-analyzer.onrender.com/docs](https://org-dependency-analyzer.onrender.com/docs)
 
 ---
 
